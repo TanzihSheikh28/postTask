@@ -34,6 +34,7 @@ module.exports = {
       colors: {
         'sky-blue': '#CFE2F3',
         'light-green': '#B6D7A8',
+        'navy-blue': '#0F2128'
       }
     },
   },
