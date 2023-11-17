@@ -1,8 +1,22 @@
-import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import React,{ useEffect,useState } from "react";
+import { Link } from "react-router-dom";
 import "./UserComponentStyle.css";
+import { GetAllUser, GetPosts } from "../apis/apiCall";
 
 export default function UserLists() {
+    const [users,setUsers] = useState([])
+    useEffect(()=>{
+        // console.log(';;;;;;;;;;;');
+        GetAllUser().then((res)=>{
+            setUsers(res.data)
+            // console.log(res.data);
+        }).catch((err)=>{});
+
+        GetPosts().then((res)=>{
+            // setUsers(res.data)
+            console.log(res.data);
+        }).catch((err)=>{});
+    },[])
     return (
         <>
             <div className="flex items-center justify-center p-2 md:p-12">
@@ -18,28 +32,25 @@ export default function UserLists() {
                         <div className="col-span-12">
                             <div className="mt-4 hidden lg:block">
                                 <ul className="responsive-table">
-                                    <li
-                                        className="table-row alternate-bg space-x-5 border border-black rounded-xl mb-3 h-[70px] items-center">
-                                        <Link to={`/user/details`} className="w-full flex items-center">
-                                            <div className="col col-1 text-16 font-normal">
-                                                <span>Name:</span>
-                                                <span>&nbsp;Person 1</span>
-                                            </div>
-                                            <div className="col col-2 text-16 font-normal text-end">
-                                                <span>Post: 12</span>
-                                            </div>
-                                        </Link>
-                                    </li>
-                                    <li
-                                        className="table-row alternate-bg space-x-5 border rounded-10 mb-3 h-[70px] items-center">
-                                        <div className="col col-1 text-16 font-normal">
-                                            <span>Name:</span>
-                                            <span>&nbsp;Person 1</span>
-                                        </div>
-                                        <div className="col col-2 text-16 font-normal text-end">
-                                            <span>Post: 12</span>
-                                        </div>
-                                    </li>
+                                    {
+                                        users.map((res,i)=>{
+                                            return(
+                                                <li key={i}
+                                                    className="table-row alternate-bg space-x-5 border border-black rounded-xl mb-3 h-[70px] items-center">
+                                                    <Link to={`/user/details`} className="w-full flex items-center">
+                                                        <div className="col col-1 text-16 font-normal">
+                                                            <span>Name:</span>
+                                                            <span>&nbsp;{res.name}</span>
+                                                        </div>
+                                                        <div className="col col-2 text-16 font-normal text-end">
+                                                            <span>Post: 12</span>
+                                                        </div>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                   
                                 </ul>
                             </div>
 
@@ -49,22 +60,22 @@ export default function UserLists() {
                                         <div className="grid grid-cols-1 flex justify-between items-center mb-2">
                                             <table className="w-full table border-separate space-y-6">
                                                 <tbody>
-                                                    <tr className="">
-                                                        <td className="w-1/2 text-end text-16 font-normal">
-                                                            Name:
-                                                        </td>
-                                                        <td className="w-1/2 text-start text-16 font-normal">
-                                                            <div>Person 1</div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr className="text-16 font-normal">
-                                                        <td className="w-1/2 text-end text-16 font-normal">
-                                                            Post:
-                                                        </td>
-                                                        <td className="w-1/2 text-start">
-                                                            <span className="ml-3">12</span>
-                                                        </td>
-                                                    </tr>
+                                                    {users.map((res, i) => (
+                                                        <React.Fragment key={i}>
+                                                            <tr className="">
+                                                                <td className="w-1/2 text-end text-16 font-normal">Name:</td>
+                                                                <td className="w-1/2 text-start text-16 font-normal">
+                                                                    <div>{res.name}</div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr className="text-16 font-normal">
+                                                                <td className="w-1/2 text-end text-16 font-normal">Post:</td>
+                                                                <td className="w-1/2 text-start">
+                                                                    <span className="ml-3">12</span>
+                                                                </td>
+                                                            </tr>
+                                                        </React.Fragment>
+                                                    ))}
                                                 </tbody>
                                             </table>
                                         </div>
