@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useHistory } from "react-router-dom";
 import "./UserComponentStyle.css";
 
 export default function UserLists() {
@@ -18,8 +19,8 @@ export default function UserLists() {
                             <div className="mt-4 hidden lg:block">
                                 <ul className="responsive-table">
                                     <li
-                                        className="table-row alternate-bg space-x-5 border rounded-10 mb-3 h-[70px] items-center">
-                                        <a href="/" className="w-full flex items-center">
+                                        className="table-row alternate-bg space-x-5 border border-black rounded-xl mb-3 h-[70px] items-center">
+                                        <Link to={`/user/details`} className="w-full flex items-center">
                                             <div className="col col-1 text-16 font-normal">
                                                 <span>Name:</span>
                                                 <span>&nbsp;Person 1</span>
@@ -27,7 +28,7 @@ export default function UserLists() {
                                             <div className="col col-2 text-16 font-normal text-end">
                                                 <span>Post: 12</span>
                                             </div>
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li
                                         className="table-row alternate-bg space-x-5 border rounded-10 mb-3 h-[70px] items-center">
