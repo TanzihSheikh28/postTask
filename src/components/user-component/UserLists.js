@@ -4,8 +4,8 @@ import "./UserComponentStyle.css";
 export default function UserLists() {
     return (
         <>
-            <div className="flex items-center justify-center p-12">
-                <div className="w-full mx-auto rounded-lg bg-white shadow-lg p-10 border border-gray-300">
+            <div className="flex items-center justify-center p-2 md:p-12">
+                <div className="w-full mx-auto rounded-lg bg-white shadow-lg p-5 md:p-10 border border-gray-300">
                     <div className="text-center">
                         <div>
                             <p className="text-24 font-semibold">
@@ -44,17 +44,28 @@ export default function UserLists() {
 
                             <div className="block lg:hidden mt-7">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    <div className="w-full border bg-white rounded-lg p-4 items-center">
-                                        <div>
-                                            <div className="flex gap-3 items-center">
-                                            </div>
-                                            <div className="text-lg font-normal mt-2 truncate"></div>
-                                        </div>
-                                        <div className="mt-4">
-                                            <div className="grid grid-cols-2 md:grid-cols-2 flex justify-between items-center">
-                                                <div className="">
-                                                </div>
-                                            </div>
+                                    <div className="w-full border border-gray-300 bg-white rounded-lg p-4 items-center">
+                                        <div className="grid grid-cols-1 flex justify-between items-center mb-2">
+                                            <table className="w-full table border-separate space-y-6">
+                                                <tbody>
+                                                    <tr className="">
+                                                        <td className="w-1/2 text-end text-16 font-normal">
+                                                            Name:
+                                                        </td>
+                                                        <td className="w-1/2 text-start text-16 font-normal">
+                                                            <div>Person 1</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr className="text-16 font-normal">
+                                                        <td className="w-1/2 text-end text-16 font-normal">
+                                                            Post:
+                                                        </td>
+                                                        <td className="w-1/2 text-start">
+                                                            <span className="ml-3">12</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
