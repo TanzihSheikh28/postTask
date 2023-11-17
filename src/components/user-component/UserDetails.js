@@ -1,9 +1,23 @@
-import React from "react";
+import React,{ useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GetCountries } from "../apis/apiCall";
 
 export default function UserDetails() {
+    const [countries,setCountries] = useState([]);
+    const [selectedCountry, setSelectedCountry] = useState('all');
     const navigate = useNavigate();
-
+    useEffect(()=>{
+        GetCountries().then((res)=>{
+            console.log(res.data);
+            setCountries(res.data)
+        }).catch((err)=>{})
+    },[])
+    
+    function handleChane(e){
+        const selectedValue = e.target.value;
+        setSelectedCountry(selectedValue);
+        console.log('Selected Country:', selectedValue);
+    }
     return (
         <>
             <div className="flex items-center justify-center p-2 md:p-12">
@@ -18,10 +32,14 @@ export default function UserDetails() {
                         </div>
                         <div class="col-span-12 md:col-span-12 lg:col-span-6 mt-5 lg:mt-0 flex gap-2 lg:gap-5 justify-between lg:justify-end items-center">
                             <div class="lg:mt-3">
-                                <select
+                                <select onChange={handleChane}
                                     class="text-16 border border-transparent border-b-gray-200 font-normal placeholder-gray-200 outline-none focus:outline-none focus:ring-0 focus:border-transparent focus:border-b-gray-200 p-2">
                                     <option value="all" >All</option>
-                                    <option></option>
+                                    {countries.map((country,i) => (
+                                        <option key={i} value={i}>
+                                            {country}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                             <div>
