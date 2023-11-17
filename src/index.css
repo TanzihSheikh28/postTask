@@ -27,3 +27,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 8px;
+  background-color: transparent
+}

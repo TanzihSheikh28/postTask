@@ -4,19 +4,22 @@ import { GetAllUser, GetCountries, GetPosts } from "../apis/apiCall";
 import { useLocation } from 'react-router-dom';
 
 export default function UserDetails() {
-    const [countries, setCountries] = useState([]);
-    const [posts, setPosts] = useState([])
-    const [user, setUser] = useState([])
-    const [selectedCountry, setSelectedCountry] = useState('all');
     const navigate = useNavigate();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const userId = searchParams.get('id');
+    const [countries, setCountries] = useState([]);
+    const [posts, setPosts] = useState([])
+    const [user, setUser] = useState([])
+    const [selectedCountry, setSelectedCountry] = useState('all');
+    const [isShowPost, setIsShowPost] = useState(false);
+    const [selectedPost, setSelectedPost] = useState([]);
 
     useEffect(() => {
         GetCountries().then((res) => {
             setCountries(res.data)
         }).catch((err) => { })
+
         GetAllUser().then((res) => {
             const filteredUsers = res.data.filter((user) => user.id === parseInt(userId, 10));
             setUser(filteredUsers);
@@ -34,6 +37,26 @@ export default function UserDetails() {
         setSelectedCountry(selectedValue);
         console.log('Selected Country:', selectedValue);
     }
+
+    function openPostModal(postData) {
+        setIsShowPost(true);
+        setSelectedPost(postData);
+        document.body.style.overflow = 'hidden';
+    }
+
+    document.addEventListener('click', function handleClickOutsideBox(event) {
+        const outsideBox = document.getElementById('post-modal');
+        if (outsideBox) {
+            if (outsideBox.contains(event.target)) {
+                setIsShowPost(false);
+                document.body.style.overflow = 'auto';
+            }
+            else {
+                return;
+            }
+        }
+    }
+    );
     return (
         <>
             <div className="flex items-center justify-center p-2 md:p-12">
@@ -57,6 +80,14 @@ export default function UserDetails() {
                                         </option>
                                     ))}
                                 </select>
+                            </div>
+                            <div className="mt-4 md:mt-0">
+                                <button
+                                    className="w-full flex justify-center items-center bg-navy-blue lg:mt-4 mt-0 block px-8 py-3 text-[#98B8C3] font-medium mb-0 text-16 space-x-2 hover:opacity-90">
+                                    <p className="text-center">
+                                        00 : 31 : 25
+                                    </p>
+                                </button>
                             </div>
                             <div>
                                 <div className="mt-4 md:mt-0">
@@ -83,26 +114,28 @@ export default function UserDetails() {
                                 {
                                     user.map((res, i) => {
                                         return (
-                                            <div key={i} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 md:gap-4 lg:gap-6 px-7 py-5 flex items-center">
-                                                <div className="w-full">
-                                                    <div>
-                                                        <p className="font-medium">{res.name}</p>
-                                                    </div>
-                                                    <div>
-                                                        <span className="font-medium">{res.username} | {res.company.catchPhrase}</span>
-                                                    </div>
-                                                </div>
-                                                <div className="w-full float-right flex justify-end mt-3 md:mt-0">
-                                                    <div>
+                                            <React.Fragment key={i}>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 md:gap-4 lg:gap-6 px-7 py-5 flex items-center">
+                                                    <div className="w-full">
                                                         <div>
-                                                            <p className="font-medium">{res.address.street}, {res.address.city} </p>
+                                                            <p className="font-medium">{res.name}</p>
                                                         </div>
                                                         <div>
-                                                            <span className="font-medium">{res.email} | {res.phone}</span>
+                                                            <span className="font-medium">{res.username} | {res.company.catchPhrase}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="w-full float-right flex justify-end mt-3 md:mt-0">
+                                                        <div>
+                                                            <div>
+                                                                <p className="font-medium">{res.address.street}, {res.address.city} </p>
+                                                            </div>
+                                                            <div>
+                                                                <span className="font-medium">{res.email} | {res.phone}</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </React.Fragment>
                                         )
                                     })
                                 }
@@ -113,23 +146,61 @@ export default function UserDetails() {
                     <div className="mt-7">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-x-5 xl:gap-x-36 gap-y-6">
                             {
-                                posts.map((post) => (
-                                    <div className="border border-black rounded-xl px-6 py-3 flex justify-center">
-                                        <div>
+                                posts.map((post, index) => (
+                                    <React.Fragment key={index}>
+                                        <div className="border border-black rounded-xl px-6 py-3 flex justify-center cursor-pointer" onClick={() => { openPostModal(post) }}>
                                             <div>
-                                                <p className="text-18 font-bold">{post.title}</p>
-                                            </div>
-                                            <div className="mt-5">
-                                                <span className="text-16 text-slate-400">{post.body}</span>
+                                                <div>
+                                                    <p className="text-18 font-bold">{post.title}</p>
+                                                </div>
+                                                <div className="mt-5">
+                                                    <span className="text-16 text-slate-400">{post.body}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </React.Fragment>
                                 ))
                             }
                         </div>
                     </div>
                 </div>
             </div>
+
+            {isShowPost ?
+                <div>
+                    <div id="post-modal"
+                        className="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center">
+                        <div className="relative w-auto flex items-center justify-center h-screen">
+                            <div
+                                className="border-0 rounded-lg shadow-lg relative flex flex-col w-2/6 bg-white outline-none focus:outline-none">
+                                <div className="flex items-center justify-end p-3 border-b border-solid border-slate-200 rounded-t">
+                                    <button onClick={() => { setIsShowPost(false); document.body.style.overflow = 'auto'; }}
+                                        className="bg-transparent border-0 float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+
+                                    </button>
+                                </div>
+                                <div>
+                                    <div className="flex flex-col justify-center py-5 px-5 w-full">
+                                        <div>
+                                            <h2 className="text-2xl font-bold">{selectedPost.title}</h2>
+                                            <div className="mt-4">
+                                                {selectedPost.body}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                :
+                null
+            }
+
+            {isShowPost ? <div className="opacity-80 fixed inset-0 z-40 bg-black" id="post-modal" ></div> : null}
         </>
     )
 }
