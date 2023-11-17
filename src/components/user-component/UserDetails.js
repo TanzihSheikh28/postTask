@@ -1,16 +1,25 @@
 import React,{ useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GetCountries } from "../apis/apiCall";
+import { GetAllUser, GetCountries } from "../apis/apiCall";
+import { useLocation } from 'react-router-dom';
 
 export default function UserDetails() {
     const [countries,setCountries] = useState([]);
+    const [user,setUser] = useState([])
     const [selectedCountry, setSelectedCountry] = useState('all');
     const navigate = useNavigate();
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const userId = searchParams.get('id');
+
     useEffect(()=>{
         GetCountries().then((res)=>{
-            console.log(res.data);
             setCountries(res.data)
         }).catch((err)=>{})
+        GetAllUser().then((res)=>{
+            const filteredUsers = res.data.filter((user) => user.id === parseInt(userId, 10));
+            setUser(filteredUsers);
+        }).catch((err)=>{});
     },[])
     
     function handleChane(e){
@@ -64,26 +73,33 @@ export default function UserDetails() {
                             </div>
 
                             <div className="border border-black rounded-xl mt-5">
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 md:gap-4 lg:gap-6 px-7 py-5 flex items-center">
-                                    <div class="w-full">
-                                        <div>
-                                            <p>Name</p>
-                                        </div>
-                                        <div>
-                                            <span>Username | Catch Phrase</span>
-                                        </div>
-                                    </div>
-                                    <div class="w-full float-right flex justify-end">
-                                        <div>
-                                            <div>
-                                                <p>Address</p>
+                                {
+                                    user.map((res,i)=>{
+                                        return(
+                                            <div key={i} class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 md:gap-4 lg:gap-6 px-7 py-5 flex items-center">
+                                                <div class="w-full">
+                                                    <div>
+                                                        <p>Name</p>
+                                                    </div>
+                                                    <div>
+                                                        <span>{res.name} | {res.company.catchPhrase}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="w-full float-right flex justify-end">
+                                                    <div>
+                                                        <div>
+                                                            <p>Address</p>
+                                                        </div>
+                                                        <div>
+                                                            <span>{res.email} | {res.phone}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <span>Email | Phone</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                        )
+                                    })
+                                }
+                                
                             </div>
                         </div>
                     </div>
