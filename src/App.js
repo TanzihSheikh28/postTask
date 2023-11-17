@@ -1,11 +1,16 @@
 import './App.css';
+import { BrowserRouter as Router, Routes, Link, Route } from 'react-router-dom';
 import UserLists from './components/user-component/UserLists';
+import UserDetails from './components/user-component/UserDetails';
 
 function App() {
   return (
-    <div>
-     <UserLists />
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<UserLists />} />
+        <Route path="/user/details" element={<UserDetails />} />
+      </Routes>
+    </Router>
   );
 }
 

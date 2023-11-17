@@ -1,4 +1,5 @@
-import React,{useEffect,useState} from "react";
+import React,{ useEffect,useState } from "react";
+import { Link } from "react-router-dom";
 import "./UserComponentStyle.css";
 import { GetAllUser, GetPosts } from "../apis/apiCall";
 
@@ -47,8 +48,8 @@ export default function UserLists() {
                                         users.map((res,i)=>{
                                             return(
                                                 <li key={i}
-                                                    className="table-row alternate-bg space-x-5 border rounded-10 mb-3 h-[70px] items-center">
-                                                    <a href="/" className="w-full flex items-center">
+                                                    className="table-row alternate-bg space-x-5 border border-black rounded-xl mb-3 h-[70px] items-center">
+                                                    <Link to={`/user/details`} className="w-full flex items-center">
                                                         <div className="col col-1 text-16 font-normal">
                                                             <span>Name:</span>
                                                             <span>&nbsp;{res.name}</span>
@@ -56,7 +57,7 @@ export default function UserLists() {
                                                         <div className="col col-2 text-16 font-normal text-end">
                                                             <span>Post: {postCountByUser[res.id] || 0}</span>
                                                         </div>
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                             )
                                         })
