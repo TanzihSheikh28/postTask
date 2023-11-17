@@ -4,17 +4,29 @@ import { GetAllUser, GetPosts } from "../apis/apiCall";
 
 export default function UserLists() {
     const [users,setUsers] = useState([])
+    const [posts,setPosts] = useState([])
+    const [postCountByUser, setPostCountByUser] = useState({});
     useEffect(()=>{
-        // console.log(';;;;;;;;;;;');
-        GetAllUser().then((res)=>{
-            setUsers(res.data)
-            // console.log(res.data);
-        }).catch((err)=>{});
+        Promise.all([GetAllUser(), GetPosts()])
+        .then(([usersRes, postsRes]) => {
+            setUsers(usersRes.data);
+            setPosts(postsRes.data);
 
-        GetPosts().then((res)=>{
-            // setUsers(res.data)
-            console.log(res.data);
-        }).catch((err)=>{});
+            // Count posts by user
+            const countByUser = {};
+            postsRes.data.forEach((post) => {
+                const userId = post.userId;
+                const user = usersRes.data.find((u) => u.id === userId);
+
+                if (user) {
+                    countByUser[user.id] = (countByUser[user.id] || 0) + 1;
+                }
+            });
+
+            setPostCountByUser(countByUser);
+        })
+        .catch((err) => {});
+
     },[])
     return (
         <>
@@ -42,7 +54,7 @@ export default function UserLists() {
                                                             <span>&nbsp;{res.name}</span>
                                                         </div>
                                                         <div className="col col-2 text-16 font-normal text-end">
-                                                            <span>Post: 12</span>
+                                                            <span>Post: {postCountByUser[res.id] || 0}</span>
                                                         </div>
                                                     </a>
                                                 </li>
