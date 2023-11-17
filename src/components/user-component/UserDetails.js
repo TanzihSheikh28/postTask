@@ -39,10 +39,10 @@ export default function UserDetails() {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-span-12 md:col-span-12 lg:col-span-6 mt-5 lg:mt-0 flex gap-2 lg:gap-5 justify-between lg:justify-end items-center">
+                        <div class="col-span-12 md:col-span-12 lg:col-span-6 mt-5 lg:mt-0 md:flex gap-2 lg:gap-5 md:justify-between lg:justify-end items-center">
                             <div class="lg:mt-3">
                                 <select onChange={handleChane}
-                                    class="text-16 border border-transparent border-b-gray-200 font-normal placeholder-gray-200 outline-none focus:outline-none focus:ring-0 focus:border-transparent focus:border-b-gray-200 p-2">
+                                    class="w-full text-16 border border-transparent border-b-gray-200 font-normal placeholder-gray-200 outline-none focus:outline-none focus:ring-0 focus:border-transparent focus:border-b-gray-200 pb-2 md:p-2 mt-4">
                                     <option value="all" >All</option>
                                     {countries.map((country, i) => (
                                         <option key={i} value={i}>
@@ -52,9 +52,9 @@ export default function UserDetails() {
                                 </select>
                             </div>
                             <div>
-                                <div>
+                                <div className="mt-4 md:mt-0">
                                     <button
-                                        class="relative flex justify-center items-center bg-light-green lg:mt-4 mt-0 block px-4 py-3 text-black font-medium mb-0 lg:mb-2 text-16 space-x-2 hover:opacity-90">
+                                        class="w-full flex justify-center items-center bg-light-green lg:mt-4 mt-0 block px-4 py-3 text-black font-medium mb-0 text-16 space-x-2 hover:opacity-90">
                                         <p class="text-center">
                                             Pause / Start
                                         </p>
