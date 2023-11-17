@@ -11,8 +11,8 @@ export default function UserDetails() {
                     <div class="grid grid-cols-12 flex justify-between items-center">
                         <div class="col-span-12 md:col-span-12 lg:col-span-6 mt-1.5">
                             <div className="d-flex justify-content-start mx-1">
-                                <div role="button" className="text-decoration-none">
-                                    <span className="go-back-option" onClick={() => { navigate(-1) }}>&nbsp;&nbsp;&nbsp;Back</span>
+                                <div className="text-decoration-none">
+                                    <span className="bg-sky-blue cursor-pointer px-4 rounded-lg py-2 border border-black" onClick={() => { navigate(-1) }}>Back</span>
                                 </div>
                             </div>
                         </div>
@@ -37,11 +37,40 @@ export default function UserDetails() {
                         </div>
                     </div>
 
-                    <div>
+                    <div className="mt-7">
+                        <div>
+                            <div className="text-center">
+                                <p className="text-24 font-semibold">
+                                    User Profile
+                                </p>
+                            </div>
 
+                            <div className="border border-black rounded-xl mt-5">
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 md:gap-4 lg:gap-6 px-7 py-5 flex items-center">
+                                    <div class="w-full">
+                                        <div>
+                                            <p>Name</p>
+                                        </div>
+                                        <div>
+                                            <span>Username | Catch Phrase</span>
+                                        </div>
+                                    </div>
+                                    <div class="w-full float-right flex justify-end">
+                                        <div>
+                                            <div>
+                                                <p>Address</p>
+                                            </div>
+                                            <div>
+                                                <span>Email | Phone</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div >
-            </div >
+                </div>
+            </div>
         </>
     )
 }

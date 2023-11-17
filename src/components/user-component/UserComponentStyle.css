@@ -14,7 +14,7 @@ i {
 }
 
 .table-row {
-    background-color: #CFE2F3;
+    background-color: var(--sky-blue)
 }
 
 .col-1 {

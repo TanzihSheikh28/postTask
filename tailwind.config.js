@@ -30,6 +30,9 @@ module.exports = {
         '24': ['24px', {
           lineHeight: '27px',
         }],
+      },
+      colors: {
+        'sky-blue': '#CFE2F3'
       }
     },
   },
