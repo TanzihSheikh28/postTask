@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GetAllUser, GetCountries } from "../apis/apiCall";
+import { GetAllUser, GetCountries, GetPosts } from "../apis/apiCall";
 import { useLocation } from 'react-router-dom';
 
 export default function UserDetails() {
     const [countries,setCountries] = useState([]);
+    const [posts,setPosts] = useState([])
     const [user,setUser] = useState([])
     const [selectedCountry, setSelectedCountry] = useState('all');
     const navigate = useNavigate();
@@ -19,6 +20,12 @@ export default function UserDetails() {
         GetAllUser().then((res)=>{
             const filteredUsers = res.data.filter((user) => user.id === parseInt(userId, 10));
             setUser(filteredUsers);
+        }).catch((err)=>{});
+
+        GetPosts().then((response)=>{
+            const filteredPosts = response.data.filter((post) => post.userId === parseInt(userId, 10));
+            console.log(filteredPosts);
+            setPosts(filteredPosts);
         }).catch((err)=>{});
     },[])
     
@@ -106,38 +113,20 @@ export default function UserDetails() {
 
                     <div className="mt-7">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-44">
+                        {
+                            posts.map((post) => (
                             <div className="border border-black rounded-xl p-4 flex justify-center">
                                 <div>
                                     <div>
-                                        <p>Post Title</p>
+                                        <p>{post.title}</p>
                                     </div>
                                     <div className="mt-5">
-                                        <span>Content</span>
+                                        <span>{post.body}</span>
                                     </div>
                                 </div>
                             </div>
-
-                            <div className="border border-black rounded-xl p-4 flex justify-center">
-                                <div>
-                                    <div>
-                                        <p>Post Title</p>
-                                    </div>
-                                    <div className="mt-5">
-                                        <span>Content</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="border border-black rounded-xl p-4 flex justify-center">
-                                <div>
-                                    <div>
-                                        <p>Post Title</p>
-                                    </div>
-                                    <div className="mt-5">
-                                        <span>Content</span>
-                                    </div>
-                                </div>
-                            </div>
+                            ))
+                        }
                         </div>
                     </div>
                 </div>
