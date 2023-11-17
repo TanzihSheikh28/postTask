@@ -1,11 +1,10 @@
 import './App.css';
+import UserLists from './components/user-component/UserLists';
 
 function App() {
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+     <UserLists />
     </div>
   );
 }
