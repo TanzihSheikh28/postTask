@@ -1,19 +1,19 @@
-import React,{ useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GetCountries } from "../apis/apiCall";
 
 export default function UserDetails() {
-    const [countries,setCountries] = useState([]);
+    const [countries, setCountries] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState('all');
     const navigate = useNavigate();
-    useEffect(()=>{
-        GetCountries().then((res)=>{
+    useEffect(() => {
+        GetCountries().then((res) => {
             console.log(res.data);
             setCountries(res.data)
-        }).catch((err)=>{})
-    },[])
-    
-    function handleChane(e){
+        }).catch((err) => { })
+    }, [])
+
+    function handleChane(e) {
         const selectedValue = e.target.value;
         setSelectedCountry(selectedValue);
         console.log('Selected Country:', selectedValue);
@@ -35,7 +35,7 @@ export default function UserDetails() {
                                 <select onChange={handleChane}
                                     class="text-16 border border-transparent border-b-gray-200 font-normal placeholder-gray-200 outline-none focus:outline-none focus:ring-0 focus:border-transparent focus:border-b-gray-200 p-2">
                                     <option value="all" >All</option>
-                                    {countries.map((country,i) => (
+                                    {countries.map((country, i) => (
                                         <option key={i} value={i}>
                                             {country}
                                         </option>
@@ -45,9 +45,9 @@ export default function UserDetails() {
                             <div>
                                 <div>
                                     <button
-                                        class="relative flex justify-center items-center bg-gray-700 lg:mt-4 mt-0 block w-full md:w-48 px-4 py-3 rounded-lg text-white font-medium mb-0 lg:mb-2 text-14 space-x-2 hover:opacity-90">
+                                        class="relative flex justify-center items-center bg-light-green lg:mt-4 mt-0 block px-4 py-3 text-black font-medium mb-0 lg:mb-2 text-16 space-x-2 hover:opacity-90">
                                         <p class="text-center">
-                                            Create Event
+                                            Pause / Start
                                         </p>
                                     </button>
                                 </div>
@@ -82,6 +82,43 @@ export default function UserDetails() {
                                                 <span>Email | Phone</span>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-7">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-44">
+                            <div className="border border-black rounded-xl p-4 flex justify-center">
+                                <div>
+                                    <div>
+                                        <p>Post Title</p>
+                                    </div>
+                                    <div className="mt-5">
+                                        <span>Content</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="border border-black rounded-xl p-4 flex justify-center">
+                                <div>
+                                    <div>
+                                        <p>Post Title</p>
+                                    </div>
+                                    <div className="mt-5">
+                                        <span>Content</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="border border-black rounded-xl p-4 flex justify-center">
+                                <div>
+                                    <div>
+                                        <p>Post Title</p>
+                                    </div>
+                                    <div className="mt-5">
+                                        <span>Content</span>
                                     </div>
                                 </div>
                             </div>
