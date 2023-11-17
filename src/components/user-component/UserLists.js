@@ -48,8 +48,8 @@ export default function UserLists() {
                                         users.map((res,i)=>{
                                             return(
                                                 <li key={i}
-                                                    className="table-row alternate-bg space-x-5 border border-black rounded-xl mb-3 h-[70px] items-center">
-                                                    <Link to={`/user/details`} className="w-full flex items-center">
+                                                    className="table-row alternate-bg space-x-5 border border-black rounded-xl mb-3 items-center">
+                                                    <Link to={`/user/details?id=${res.id}`} className="w-full flex items-center h-[60px]">
                                                         <div className="col col-1 text-16 font-normal">
                                                             <span>Name:</span>
                                                             <span>&nbsp;{res.name}</span>
