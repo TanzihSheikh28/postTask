@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GetAllUser, GetCountries, GetPosts } from "../apis/apiCall";
+import { GetAllUser, GetCountries, GetPosts, GetTimeZone } from "../apis/apiCall";
 import { useLocation } from 'react-router-dom';
 
 export default function UserDetails() {
@@ -27,7 +27,7 @@ export default function UserDetails() {
 
         GetPosts().then((response) => {
             const filteredPosts = response.data.filter((post) => post.userId === parseInt(userId, 10));
-            console.log(filteredPosts);
+            // console.log(filteredPosts);
             setPosts(filteredPosts);
         }).catch((err) => { });
     }, [userId])
@@ -36,6 +36,9 @@ export default function UserDetails() {
         const selectedValue = e.target.value;
         setSelectedCountry(selectedValue);
         console.log('Selected Country:', selectedValue);
+        GetTimeZone(selectedValue).then((res) =>{ 
+            console.log(res.data);
+         }).catch(() =>{});
     }
 
     function openPostModal(postData) {
@@ -75,7 +78,7 @@ export default function UserDetails() {
                                     className="w-full text-16 border border-transparent border-b-gray-200 font-normal placeholder-gray-200 outline-none focus:outline-none focus:ring-0 focus:border-transparent focus:border-b-gray-200 pb-2 md:p-2 mt-4">
                                     <option value="all" >All</option>
                                     {countries.map((country, i) => (
-                                        <option key={i} value={i}>
+                                        <option key={i} value={country}>
                                             {country}
                                         </option>
                                     ))}

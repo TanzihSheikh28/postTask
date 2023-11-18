@@ -9,3 +9,6 @@ export function GetPosts(){
 export function GetCountries(){
     return axios.get('http://worldtimeapi.org/api/timezone')
 }
+export function GetTimeZone(data){
+    return axios.get(' http://worldtimeapi.org/api/timezone/'+data)
+}
