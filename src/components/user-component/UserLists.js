@@ -12,13 +12,10 @@ export default function UserLists() {
             .then(([usersRes, postsRes]) => {
                 setUsers(usersRes.data);
                 setPosts(postsRes.data);
-
-                // Count posts by user
                 const countByUser = {};
                 postsRes.data.forEach((post) => {
                     const userId = post.userId;
                     const user = usersRes.data.find((u) => u.id === userId);
-
                     if (user) {
                         countByUser[user.id] = (countByUser[user.id] || 0) + 1;
                     }

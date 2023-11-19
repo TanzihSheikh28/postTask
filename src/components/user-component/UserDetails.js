@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   GetAllUser,
   GetCountries,
@@ -17,7 +17,7 @@ export default function UserDetails() {
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState([]);
   const [time, setTime] = useState("00:00:00");
-  const [selectedCountry, setSelectedCountry] = useState("all");
+  const [selectedCountry, setSelectedCountry] = useState(0);
   const [isShowPost, setIsShowPost] = useState(false);
   const [selectedPost, setSelectedPost] = useState([]);
   const [intervalId, setIntervalId] = useState(null);
@@ -63,7 +63,7 @@ export default function UserDetails() {
     if (selectedValue!=0) {
     GetTimeZone(selectedValue)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         // const formattedTime = convertTime(res.data.datetime);
         setTime(convertTime(res.data.datetime))
         startTimer(convertTime(res.data.datetime));
@@ -78,7 +78,6 @@ export default function UserDetails() {
     let currentTime = initialTime;
 
     const timerInterval = setInterval(() => {
-      // Increment the time
       const [hours, minutes, seconds] = currentTime.split(":").map(Number);
 
       let newSeconds = seconds + 1;
@@ -103,11 +102,9 @@ export default function UserDetails() {
         newMinutes
       ).padStart(2, "0")}:${String(newSeconds).padStart(2, "0")}`;
 
-      // Update the displayed time
       setTime(currentTime);
     }, 1000);
-    console.log(timerInterval);
-    // Clean up the interval when the component unmounts or when the country changes
+    // console.log(timerInterval);
     setIntervalId(timerInterval);
   }
 
@@ -155,14 +152,14 @@ export default function UserDetails() {
             <div className="col-span-12 md:col-span-12 lg:col-span-6 mt-1.5">
               <div className="d-flex justify-content-start mx-1">
                 <div className="text-decoration-none">
-                  <span
+                <Link to='/'><span 
                     className="bg-sky-blue cursor-pointer px-4 rounded-lg py-2 border border-black"
-                    onClick={() => {
-                      navigate(-1);
-                    }}
+                    // onClick={() => {
+                    //   navigate(-1);
+                    // }}
                   >
                     Back
-                  </span>
+                  </span> </Link>
                 </div>
               </div>
             </div>
@@ -286,13 +283,13 @@ export default function UserDetails() {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="1.5"
+                      strokeWidth="1.5"
                       stroke="currentColor"
-                      class="w-8 h-8"
+                      className="w-8 h-8"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
